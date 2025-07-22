@@ -1,0 +1,122 @@
+ body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: linear-gradient(
+      to left bottom,#00aeef,#00aeef,#2778e8f5,#00aeef,#00aeef,#2778e8f5,#00aeef,#00aeef);
+      animation: contact21 5s infinite cubic-bezier(0.62, 0.28, 0.23, 0.99);
+      background-size: 400%;
+    }
+
+     @keyframes contact21 {
+      0% {
+        background-position: 0% 50%;
+        }
+
+    50% {
+       background-position: 100% 50%;
+       }
+  100% {
+      background-position: 0% 50%;
+     }
+   }
+
+    
+    .main-wrapper {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .top-img {
+      width: 90px;
+      margin-bottom: 15px;
+    }
+    h2 {
+      margin: 0 0 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+    }
+    .in-btn, .out-btn, .orange-btn, .green-btn {
+      flex: 1;
+      padding: 10px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    .in-btn { background: #00b894; }
+    .out-btn { background: #d63031; }
+    .orange-btn { background: #f39c12; margin-top: 10px; }
+    .green-btn { background: #27ae60; margin-bottom: 10px; }
+    .circle {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .green-circle { background: #2ecc71; }
+    .red-circle { background: #e74c3c; }
+    #statusMsg {
+      margin: 10px 0;
+      font-size: 15px;
+    }
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 5px;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+ .date-wrapper {
+      position: relative;
+      width: 250px;
+    }
+
+    .date-wrapper input {
+      width: 100%;
+      padding: 10px 40px 10px 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .date-wrapper i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      pointer-events: none;
+    }

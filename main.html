@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Attendance</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #f0f4c3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .card img {
+      width: 100px;
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .in-btn, .out-btn, .history-btn {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+    }
+    .in-btn {
+      background-color: #00b894;
+    }
+    .out-btn {
+      background-color: #d63031;
+    }
+    .history-btn {
+      background-color: #e17055;
+      margin-top: 10px;
+    }
+    .msg {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    #historySection {
+      display: none;
+      text-align: left;
+      margin-top: 20px;
+    }
+    #historySection h3 {
+      text-align: center;
+      color: #2d3436;
+    }
+    .record {
+      background: #ecf0f1;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="https://i.imgur.com/FQ7TckI.png" alt="Logo" />
+    <h2>📍 Smart Attendance</h2>
+
+    <input type="text" id="studentId" placeholder="Enter your Reg.No" />
+
+    <div class="btn-row">
+      <button class="in-btn" onclick="submitAttendance('IN')">IN</button>
+      <button class="out-btn" onclick="submitAttendance('OUT')">OUT</button>
+    </div>
+
+    <button class="history-btn" onclick="loadHistory()">📅 Show History</button>
+
+    <p id="msg" class="msg">Please enter your Reg.No to proceed.</p>
+
+    <div id="historySection">
+      <h3>Your Attendance History</h3>
+      <div id="historyList"></div>
+    </div>
+  </div>
+
+  <script>
+    const URL = "https://script.google.com/macros/s/AKfycbzhR-60-AUw2gL6_8ro7Dm3arl0exFNJ0a3n0MYPE-r-s4YwLrJDkJsT31mYk9LqqG92g/exec";
+    const studentMap = {
+      "101": { name: "Rahul" },
+      "102": { name: "Vishal" },
+      // Add more IDs
+    };
+
+    let lastId = localStorage.getItem("studentId") || "";
+    if (lastId) {
+      document.getElementById("studentId").value = lastId;
+    }
+
+    function submitAttendance(status) {
+      const id = document.getElementById("studentId").value.trim();
+      const msg = document.getElementById("msg");
+      if (!id) {
+        msg.textContent = "❌ कृपया Reg.No दर्ज करें";
+        msg.style.color = "red";
+        return;
+      }
+
+      localStorage.setItem("studentId", id);
+      msg.textContent = "⏳ कृपया प्रतीक्षा करें...";
+      msg.style.color = "black";
+
+      const formData = new URLSearchParams();
+      formData.append("ID", id);
+      formData.append("Status", status);
+
+      fetch(URL, { method: "POST", body: formData })
+        .then(res => res.json())
+        .then(data => {
+          if (data.result === "success") {
+            msg.innerHTML = `✅ Hello! <b style='color: #0984e3'>${data.name}</b> ${status} Marked!`;
+            msg.style.color = "green";
+          } else {
+            msg.textContent = "❌ कोई त्रुटि हुई।";
+            msg.style.color = "red";
+          }
+        })
+        .catch(() => {
+          msg.textContent = "❌ नेटवर्क त्रुटि!";
+          msg.style.color = "red";
+        });
+    }
+
+    function loadHistory() {
+      const id = document.getElementById("studentId").value.trim();
+      const historyList = document.getElementById("historyList");
+      const msg = document.getElementById("msg");
+
+      if (!id) {
+        msg.textContent = "❌ Reg.No आवश्यक है।";
+        msg.style.color = "red";
+        return;
+      }
+
+      localStorage.setItem("studentId", id);
+      msg.textContent = "🔄 इतिहास लोड हो रहा है...";
+      msg.style.color = "#0984e3";
+
+      fetch(`?id=${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.length === 0) {
+            historyList.innerHTML = "⚠️ कोई रिकॉर्ड नहीं मिला";
+          } else {
+            historyList.innerHTML = data.map(row => `
+              <div class="record">
+                <b>${row.date}</b> at ${row.time} → ${row.status}
+              </div>
+            `).join("");
+          }
+          document.getElementById("historySection").style.display = "block";
+        })
+        .catch(() => {
+          msg.textContent = "❌ नेटवर्क समस्या";
+          msg.style.color = "red";
+        });
+    }
+  </script>
+</body>
+</html>

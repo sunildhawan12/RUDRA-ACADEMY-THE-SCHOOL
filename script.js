@@ -45,7 +45,7 @@ window.onload = () => {
 
 function saveAndProceed() {
   const id = document.getElementById("regInput").value.trim();
-   if (!id || !studentMap[id]) return alert("❌ Invalid ID!");
+  if (!id || !studentMap[id]) return alert("❌ Invalid ID!");
   localStorage.setItem("regId", id);
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("attendanceSection").style.display = "block";

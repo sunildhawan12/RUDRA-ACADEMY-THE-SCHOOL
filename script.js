@@ -45,6 +45,14 @@ window.onload = () => {
 };
 
 
+function saveAndProceed() {
+  const id = document.getElementById("regInput").value.trim();
+  if (!id || !studentMap[id]) return alert("❌ Invalid ID!");
+  localStorage.setItem("regId", id);
+  document.getElementById("loginSection").style.display = "none";
+  document.getElementById("attendanceSection").style.display = "block";
+  checkLocation(id);
+}
 function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;

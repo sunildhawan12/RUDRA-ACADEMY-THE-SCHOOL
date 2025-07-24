@@ -103,20 +103,12 @@
       width: 250px;
     }
 
-    .date-wrapper input {
-      width: 100%;
-      padding: 10px 40px 10px 12px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      outline: none;
-    }
-
-    .date-wrapper i {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #666;
-      pointer-events: none;
+    button {
+      margin-top: 10px;
+      background: green;
+      color: white;
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
     }

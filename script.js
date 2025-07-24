@@ -1,8 +1,8 @@
 // ✅ Smart Attendance System (LocalStorage-only IN restriction with OUT block & auto history)
 // ✅ Smart Attendance System (LocalStorage-only IN restriction with OUT block & auto history)
 
-const allowedLat = 26.486691442317298;
-const allowedLng = 74.63343361051672;
+const allowedLat = 26.508982853131812;
+const allowedLng = 74.54039096484861;
 const radius = 0.05;
 
 const studentMap = {
@@ -34,6 +34,7 @@ if (localStorage.getItem("lastActionDate") !== today) {
   localStorage.setItem("lastActionDate", today);
 }
 
+
 window.onload = () => {
   const savedId = localStorage.getItem("regId");
   if (savedId && studentMap[savedId]) {
@@ -43,14 +44,6 @@ window.onload = () => {
   }
 };
 
-function saveAndProceed() {
-  const id = document.getElementById("regInput").value.trim();
-  if (!id || !studentMap[id]) return alert("❌ Invalid ID!");
-  localStorage.setItem("regId", id);
-  document.getElementById("loginSection").style.display = "none";
-  document.getElementById("attendanceSection").style.display = "block";
-  checkLocation(id);
-}
 
 function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -233,3 +226,14 @@ function renderHistoryTable(data) {
       </tr>`;
   });
 }
+  function downloadHistoryPDF() {
+    const element = document.getElementById('historySection');
+    const opt = {
+      margin: 0.5,
+      filename: 'Attendance-History.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+  }

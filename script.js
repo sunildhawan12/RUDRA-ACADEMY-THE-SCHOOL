@@ -44,15 +44,33 @@ window.onload = () => {
   }
 };
 
-
 function saveAndProceed() {
   const id = document.getElementById("regInput").value.trim();
-  if (!id || !studentMap[id]) return alert("❌ Invalid ID!");
+
+  if (!id || !studentMap[id]) {
+    alert("❌ Invalid ID!");
+    return;
+  }
+
   localStorage.setItem("regId", id);
+
+  // ✅ Hide login input and button
+  document.getElementById("regInput").style.display = "none";
+  const loginBtn = document.querySelector('button[onclick="saveAndProceed()"]');
+  if (loginBtn) loginBtn.style.display = "none";
+
+  // ✅ Hide Create Account link wrapper (entire <a>)
+  const createWrapper = document.getElementById("createAccountWrapper");
+  if (createWrapper) createWrapper.style.display = "none";
+
+  // ✅ Show attendance section
   document.getElementById("loginSection").style.display = "none";
   document.getElementById("attendanceSection").style.display = "block";
+
   checkLocation(id);
 }
+
+
 function getDistance(lat1, lon1, lat2, lon2) {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -70,7 +88,7 @@ function checkLocation(id) {
 
   // ✅ अगर पहले ही OUT हो चुका है
   if (lastDate === today && status === "OUT") {
-    statusMsg.innerHTML = `❌ <b style="color:#ff009d">${name}</b>, आप पहले ही 🟢'IN' और '🔴OUT' हो चुके हैं! दोबारा अनुमत नहीं है।`;
+    statusMsg.innerHTML = `❌ <b style="color: #ff009d">${name}</b>, आप पहले ही 🟢'IN' और '🔴OUT' हो चुके हैं! दोबारा अनुमत नहीं है।`;
     showHistory();
     return;
   }
@@ -78,7 +96,7 @@ function checkLocation(id) {
   // ✅ अगर पहले ही IN हो चुका है (OUT नहीं हुआ)
   if (lastDate === today && status === "IN") {
     const time = localStorage.getItem("firstInTime");
-    statusMsg.innerHTML = `✅ Hello <b style="color:#ff009d">${name}</b>, आप पहले ही "🟢IN" हो चुके हैं<br>⏰ समय: ${time}`;
+    statusMsg.innerHTML = `✅ Hello <b style="color: #ff009d">${name}</b>, आप पहले ही "🟢IN" हो चुके हैं<br>⏰ समय: ${time}`;
     return;
   }
 
@@ -101,11 +119,11 @@ function checkLocation(id) {
       localStorage.setItem("lastActionDate", today);
       localStorage.setItem("firstInTime", timeStr);
 
-      statusMsg.innerHTML = `✅ Hello <b style="color:#ff009d">${name}</b>, आप Library क्षेत्र के अंदर हैं!<br>✅ आपकी "🟢IN" उपस्थिति दर्ज की गई है - समय: ⏰${timeStr}`;
+      statusMsg.innerHTML = `✅ Hello <b style="color: #ff009d">${name}</b>, आप School क्षेत्र के अंदर हैं!<br>✅ आपकी "🟢IN" उपस्थिति दर्ज की गई है - समय: ⏰${timeStr}`;
       markAttendanceSilent("IN");
       setTimeout(showHistory, 2000);
     } else {
-      statusMsg.innerHTML = `❌ आप Library क्षेत्र से बाहर हैं (📏 ${dist.toFixed(2)} km)। IN उपस्थिति नहीं हो सकती।`;
+      statusMsg.innerHTML = `❌ आप School क्षेत्र से बाहर हैं <b style="color: #ff009d">(🧍‍♂️📏 ${dist.toFixed(2)} km)</b>आपकी  IN उपस्थिति नहीं हो सकती।`;
     }
 
   }, err => {

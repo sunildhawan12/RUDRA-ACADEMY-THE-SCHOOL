@@ -112,3 +112,13 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    #statusMsg {
+  margin-top: 20px;
+  background-color: #00b894;
+  color: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #00b894;
+  overflow-x: auto;
+  max-width: 100%;
+}

@@ -20,6 +20,7 @@ const studentMap = {
   "420": "Rahul Rawat",
   "506": "kana ram",
   "423": "Ramniwash"
+  "Ajmer": "Yash"
 };
 
 const URL = "https://script.google.com/macros/s/AKfycbzhR-60-AUw2gL6_8ro7Dm3arl0exFNJ0a3n0MYPE-r-s4YwLrJDkJsT31mYk9LqqG92g/exec";
@@ -263,3 +264,4 @@ function renderHistoryTable(data) {
     };
     html2pdf().set(opt).from(element).save();
   }
+

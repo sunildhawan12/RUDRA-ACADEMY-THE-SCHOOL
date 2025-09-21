@@ -1,8 +1,8 @@
 // ✅ Smart Attendance System (LocalStorage-only IN restriction with OUT block & auto history)
 // ✅ Smart Attendance System (LocalStorage-only IN restriction with OUT block & auto history)
 
-const allowedLat = 26.508982853131812;
-const allowedLng = 74.54039096484861;
+const allowedLat = 26.48662422328872, 
+const allowedLng = 74.63341215284436;
 const radius = 0.05;
 
 const studentMap = {
@@ -120,11 +120,11 @@ function checkLocation(id) {
       localStorage.setItem("lastActionDate", today);
       localStorage.setItem("firstInTime", timeStr);
 
-      statusMsg.innerHTML = `✅ Hello <b style="color: #ff009d">${name}</b>, आप School क्षेत्र के अंदर हैं!<br>✅ आपकी "🟢IN" उपस्थिति दर्ज की गई है - समय: ⏰${timeStr}`;
+      statusMsg.innerHTML = `✅ Hello <b style="color: #ff009d">${name}</b>, आप Library क्षेत्र के अंदर हैं!<br>✅ आपकी "🟢IN" उपस्थिति दर्ज की गई है - समय: ⏰${timeStr}`;
       markAttendanceSilent("IN");
       setTimeout(showHistory, 2000);
     } else {
-      statusMsg.innerHTML = `❌ आप School क्षेत्र से बाहर हैं <b style="color: #ff009d">(🧍‍♂️📏 ${dist.toFixed(2)} km)</b>आपकी  IN उपस्थिति नहीं हो सकती।`;
+      statusMsg.innerHTML = `❌ आप Library क्षेत्र से बाहर हैं <b style="color: #ff009d">(🧍‍♂️📏 ${dist.toFixed(2)} km)</b>आपकी  IN उपस्थिति नहीं हो सकती।`;
     }
 
   }, err => {
@@ -264,5 +264,6 @@ function renderHistoryTable(data) {
     };
     html2pdf().set(opt).from(element).save();
   }
+
 
 

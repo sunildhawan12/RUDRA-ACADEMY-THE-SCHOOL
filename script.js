@@ -6,7 +6,7 @@
 const allowedLat = 26.488872120852985;
 const allowedLng = 74.63289537916941;
 
-const radius = 0.05;
+const radius = 0.2;
 
 const studentMap = {
   "101": "Sunil Dhawan",
@@ -228,6 +228,7 @@ function renderHistoryTable(data) {
       </tr>`;
   });
 }
+
 
 
 

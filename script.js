@@ -1,6 +1,6 @@
 // ================== Config ==================
-const allowedLat = 26.488872120852985;
-const allowedLng = 74.63289537916941;
+const allowedLat = 26.50894380146316;
+const allowedLng = 74.54139110908237;
 const radius = 0.2; // km
 const URL = "https://script.google.com/macros/s/AKfycbzhR-60-AUw2gL6_8ro7Dm3arl0exFNJ0a3n0MYPE-r-s4YwLrJDkJsT31mYk9LqqG92g/exec";
 const historyUrl = "https://script.google.com/macros/s/AKfycbwYMb6IVNNSVO6E70ujDfO3x1x7G2sZX44X37MpTFiuBGysDNScXmsbZxuZUv-qJfXA/exec";
@@ -82,11 +82,11 @@ function checkLocation(id) {
       localStorage.setItem("attendanceStatus", "IN");
       localStorage.setItem("firstInTime", timeStr);
       localStorage.setItem("lastActionDate", todayISO);
-      statusMsg.innerHTML = `✅ Hello <b style="color:#ff009d">${name}</b>, आप Library क्षेत्र के अंदर हैं!<br>🟢 "IN" दर्ज - ⏰${timeStr}`;
+      statusMsg.innerHTML = `✅ Hello <b style="color:#ff009d">${name}</b>, आप School क्षेत्र के अंदर हैं!<br>🟢 "IN" दर्ज - ⏰${timeStr}`;
       markAttendanceSilent("IN");
       setTimeout(showHistory, 2000);
     } else {
-      statusMsg.innerHTML = `❌ आप Library क्षेत्र से बाहर हैं (📏 ${dist.toFixed(2)} km)।`;
+      statusMsg.innerHTML = `❌ आप School क्षेत्र से बाहर हैं (📏 ${dist.toFixed(2)} km)।`;
     }
   }, err => { statusMsg.innerHTML = `❌ Location error: ${err.message}`; }, { enableHighAccuracy:true, timeout:10000 });
 }
@@ -170,3 +170,4 @@ function renderHistoryTable(data) {
     `;
   });
 }
+
